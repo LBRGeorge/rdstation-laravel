@@ -193,29 +193,58 @@ class RDStation
 
     public function getFields()
     {
-		$this->guardAgainstAutentication();
-    	$options = [
-		    'request.options' => [
-		        'timeout'         => 10,
-		        'connect_timeout' => 5
-		    ]
-		];
-    	$client = new \GuzzleHttp\Client(['headers' => [
-    		'Authorization' => 'Bearer ' . $this->token,
-	        'Content-Type' => 'application/json'
-	        ]
-	    ], $options);
-	    
-	    try {
-		    $res = $client->get("https://api.rd.services/platform/contacts/fields");
-		} catch (\GuzzleHttp\Exception\ClientException $e) {
-			$this->returnError($e);
+			$this->guardAgainstAutentication();
+				$options = [
+					'request.options' => [
+							'timeout'         => 10,
+							'connect_timeout' => 5
+					]
+			];
+				$client = new \GuzzleHttp\Client(['headers' => [
+					'Authorization' => 'Bearer ' . $this->token,
+						'Content-Type' => 'application/json'
+						]
+				], $options);
+				
+				try {
+					$res = $client->get("https://api.rd.services/platform/contacts/fields");
+			} catch (\GuzzleHttp\Exception\ClientException $e) {
+				$this->returnError($e);
+			}
+				$code = $res->getStatusCode();
+			if ($code == '200') {
+				return json_decode($res->getBody()->getContents());
+			}    	
 		}
-	    $code = $res->getStatusCode();
-		if ($code == '200') {
-			return json_decode($res->getBody()->getContents());
-		}    	
-    }
+		
+		public function getContact($email)
+		{
+			$this->guardAgainstAutentication();
+
+			$options = [
+				'request.options' => [
+						'timeout'         => 10,
+						'connect_timeout' => 5
+				]
+			];
+
+			$client = new \GuzzleHttp\Client(['headers' => [
+				'Authorization' => 'Bearer ' . $this->token,
+					'Content-Type' => 'application/json'
+					]
+			], $options);
+
+			try {
+				$res = $client->get("https://api.rd.services/platform/contacts/email:" . $email);
+			} catch (\GuzzleHttp\Exception\ClientException $e) {
+				$this->returnError($e);
+			}
+
+			$code = $res->getStatusCode();
+			if ($code == '200') {
+				return json_decode($res->getBody()->getContents());
+			}
+		}
 
     protected function guardAgainstAutentication()
     {
