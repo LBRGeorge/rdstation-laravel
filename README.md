@@ -1,3 +1,8 @@
+# THIS IS A FORK FROM
+https://github.com/silici0/rdstation-laravel
+
+---
+
 # Laravel integration for RDStation version 2.0
 
 This library provides an objected-oriented wrapper of the PHP classes to access RDStation API v2
