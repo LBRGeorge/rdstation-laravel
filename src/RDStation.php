@@ -154,7 +154,7 @@ class RDStation
 		}
     }
 
-    public function saveEvent($event_identifier, $data)
+    public function saveEvent($event_type, $event_identifier, $data)
     {
     	$this->guardAgainstAutentication();
     	$options = [
@@ -169,7 +169,7 @@ class RDStation
 	        ]
 	    ], $options);
 	    $body = array();
-	    $body['event_type'] = "CONVERSION";
+	    $body['event_type'] = $event_type;
 	    $body['event_family'] = "CDP";
 	    $body['payload'] = array();
 	    $body['payload']['conversion_identifier'] = $event_identifier;
