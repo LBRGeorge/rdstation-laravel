@@ -237,7 +237,7 @@ class RDStation
 			try {
 				$res = $client->get("https://api.rd.services/platform/contacts/email:" . $email);
 			} catch (\GuzzleHttp\Exception\ClientException $e) {
-				$this->returnError($e);
+				//$this->returnError($e);
 
 				return null;
 			}
